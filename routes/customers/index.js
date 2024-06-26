@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("./customer.controller");
+// const controller = require("./customer.controller");
 
 router.get("/", async (req, res, next) => {
     const result = await controller.getCustomers(req.query);
@@ -9,6 +10,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
     const result = await controller.createCustomer(req.body);
+    console.log("request body" + req.body);
     res.send(result);
 });
 
