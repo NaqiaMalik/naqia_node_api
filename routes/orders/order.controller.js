@@ -1,10 +1,10 @@
-const service = require("./product.service");
+const service = require("./order.service");
 const joi = require("joi");
 
 class controller {
-    async getProducts(payload) {
+    async getOrders(payload) {
         try {
-            const data = await service.getProducts(payload);
+            const data = await service.getOrders(payload);
             return {
                 success: true,
                 message: "Success",
@@ -18,10 +18,10 @@ class controller {
         }
     }
 
-    async createProduct(payload) {
+    async createOrder(payload) {
         try {
-            const data = await service.createProduct(payload);
-            console.log("payload from controllers.createproduct " + payload);
+            const data = await service.createOrder(payload);
+            console.log("payload from controllers.createorder " + payload);
             return {
                 success: true,
                 message: "Success",
@@ -35,9 +35,9 @@ class controller {
         }
     }
 
-    async createOrUpdateProduct(payload) {
+    async createOrUpdateOrder(payload) {
         try {
-            const data = await service.createOrUpdateProduct(payload);
+            const data = await service.createOrUpdateOrder(payload);
             return {
                 success: true,
                 message: "Success",
@@ -51,9 +51,9 @@ class controller {
         }
     }
 
-    async patchProduct(payload) {
+    async patchOrder(payload) {
         try {
-            const data = await service.patchProduct(payload);
+            const data = await service.patchOrder(payload);
             return {
                 success: true,
                 message: "Success",
@@ -67,9 +67,9 @@ class controller {
         }
     }
 
-    async deleteProduct(payload) {
+    async deleteOrder(payload) {
         try {
-            const data = await service.deleteProduct(payload);
+            const data = await service.deleteOrder(payload);
             return {
                 success: true,
                 message: "Success",

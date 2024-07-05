@@ -10,9 +10,6 @@ class service {
         try {
             const full_name = payload.full_name;
             const email = payload.email;
-            // const email = payload.email || ""; // set default value to empty string if undefined
-
-            // console.log("payload from service.createcustomer " + full_name);
             const data = await Customer.query().insert({ full_name, email });
             return data;
         } catch (error) {
@@ -23,23 +20,22 @@ class service {
     async createOrUpdateCustomer(payload) {
         console.log(payload);
         try {
-            const id = payload.id;
-            const { full_name, email } = payload;
-            console.log("id check from payload" + id);
-            const data = await Customer.query().findById(id);
-            if (!data) {
-                console.log("User not found");
-                return data;
+            const { id, full_name, email } = payload;
+            console.log("id come from payload" + id);
+            // Check if the customer exists
+            let customer = await Customer.query().findById(id);
+            console.log("Customer assign by fetching data:", customer);
+            if (customer != null) {
+                // Update existing customer
+                customer = await Customer.query()
+                    .patchAndFetchById(id, { full_name, email });
+                console.log("Customer updated:", customer);
             } else {
-                await Customer.query().update({
-                    id,
-                    full_name,
-                    email
-                }).onConflict("id")
-                    .merge();
-                console.log("User update" + data);
+                // Create new customer
+                customer = await Customer.query().insert({ full_name, email });
+                console.log("Customer created:", customer);
             }
-            return data;
+            return customer;
         } catch (error) {
             console.error(error);
         }
@@ -65,6 +61,10 @@ class service {
             return data;
         } catch (error) {
             console.error(error);
+            return {
+                success: false,
+                message: error.message
+            };
         }
     }
 
